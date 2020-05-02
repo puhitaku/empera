@@ -230,12 +230,13 @@ func (r *rules) Set(raw string) error {
 
 func main() {
 	var rules rules
-	flag.Var(&rules, "rule", "Proxy rule. example: -rule 'local=localhost:8080, remote=archive.raspberrypi.org'")
+	flag.Var(&rules, "rule", "Proxy rule. example: -rule 'local=localhost:8080, remote=super.slow.repository.example.com'")
 	flag.Parse()
 
 	if len(rules) == 0 {
 		fmt.Fprintf(os.Stderr, "Fatal: specify one or more rules.\n")
 		flag.Usage()
+		os.Exit(1)
 	}
 
 	for i, rule := range rules {
