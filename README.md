@@ -7,10 +7,20 @@ Dumb yet simple single-file APT proxy for temporary package cache.
 Example :sunglasses:
 --------------------
 
-For example,
+Invoke Empera by:
 
 ```
-$ go run empera.go -rule "local=localhost:8080, remote=super.slow.repository.example.com"
+$ go run empera.go -rule "local=localhost:8080, remote=archive.raspberrypi.org"
+```
+
+And replace a host part in your `sources.list`:
+
+```
+# Comment out the original line:
+# deb http://archive.raspberrypi.org/debian/ buster main
+
+# Tell APT to fetch things via Empera:
+deb http://localhost:8080/debian/ buster main
 ```
 
 
