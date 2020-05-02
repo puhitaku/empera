@@ -84,9 +84,9 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		fmt.Printf("error: %s\n", err)
+		fmt.Printf("%s\n", err)
 	} else {
-		fmt.Printf("success\n")
+		fmt.Printf("200\n")
 	}
 }
 
