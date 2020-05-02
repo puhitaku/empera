@@ -23,9 +23,8 @@ type Proxy struct {
 	cacheLock sync.Mutex
 }
 
-func NewProxy(remote string) (*Proxy, error) {
+func NewProxy() (*Proxy, error) {
 	p := &Proxy{
-		remote: remote,
 		cli: http.DefaultClient,
 		cache: map[string]struct{}{},
 	}
@@ -54,8 +53,9 @@ func NewProxy(remote string) (*Proxy, error) {
 	return p, nil
 }
 
-func (p *Proxy) Run(host string) {
-	err := http.ListenAndServe(host, p)
+func (p *Proxy) Run(local, remote string) {
+	p.remote = remote
+	err := http.ListenAndServe(local, p)
 	if err != nil {
 		panic(err)
 	}
@@ -242,11 +242,11 @@ func main() {
 	for i, rule := range rules {
 		fmt.Printf("Proxy Rule %d: %s -> %s\n", i+1, rule.Local, rule.Remote)
 
-		p, err := NewProxy(rule.Remote)
+		p, err := NewProxy()
 		if err != nil {
 			panic(err)
 		}
-		go p.Run(rule.Local)
+		go p.Run(rule.Local, rule.Remote)
 	}
 	for {
 		time.Sleep(9999999999)
