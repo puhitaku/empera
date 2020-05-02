@@ -17,4 +17,4 @@ $ go run empera.go -rule "local=localhost:8080, remote=super.slow.repository.exa
 Oh my gosh! archive.raspberrypi.org is SUPER slow!!!
 ----------------------------------------------------
 
-Useful example for proxying Raspberry Pi Foundation + Raspbian proxy is available at [serve_for_raspberrypi.sh](serve_for_raspberrypi.sh). Get it serve for you.
+Useful example for proxying Raspberry Pi Foundation + Raspbian is available at [serve_for_raspberrypi.sh](serve_for_raspberrypi.sh). Get it serve for you.
