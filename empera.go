@@ -64,7 +64,7 @@ func (p *Proxy) Run(local, remote string) {
 // ServeHTTP implements http.Handler interface
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var err error
-	encoded := url.PathEscape(r.URL.Path)
+	encoded := url.PathEscape(r.Host + "/" + r.URL.Path)
 
 	exclude := []string{"Release", "Packages", "Contents"}
 	nocache := false
@@ -94,7 +94,7 @@ func (p *Proxy) fetchFromRemote(w http.ResponseWriter, r *http.Request, cache bo
 	var f io.WriteCloser = NullWriter{}
 	var err error
 
-	encoded := url.PathEscape(r.URL.Path)
+	encoded := url.PathEscape(r.Host + "/" + r.URL.Path)
 	fpath := filepath.Join("cache", encoded)
 
 	newURL, err := url.Parse(r.URL.String())
@@ -164,7 +164,7 @@ func (p *Proxy) fetchFromRemote(w http.ResponseWriter, r *http.Request, cache bo
 }
 
 func (p *Proxy) fetchFromCache(w http.ResponseWriter, r *http.Request) error {
-	encoded := url.PathEscape(r.URL.Path)
+	encoded := url.PathEscape(r.Host + "/" + r.URL.Path)
 	f, err := os.Open(filepath.Join("cache", encoded))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
